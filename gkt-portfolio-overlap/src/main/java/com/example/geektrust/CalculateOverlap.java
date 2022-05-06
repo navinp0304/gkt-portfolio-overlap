@@ -32,7 +32,16 @@ public class CalculateOverlap implements IStockCommand {
 			fundPortFolioIntersection.retainAll(completePortFolio.get(currentFundName));
 			double overlap = (2.0 * fundPortFolioIntersection.size() * 100.0) / fundPortFolioUnion;
 			// if (overlap > MYEPS)
-			System.out.println(fundName + " " + currentFundName + " " + String.format("%.2f", overlap) + "%");
+			// System.out.println(fundName + " " + currentFundName + " " +
+			// String.format("%.2f", overlap) + "%");
+			String fullMessage = fundName + " " + currentFundName + " " + String.format("%.2f", overlap) + "%\n";
+			// String printMessage = (overlap > MYEPS) ? fullMessage:emptyMessage;
+			
+			int isgreater = (int) Math.min(Math.max(overlap-MYEPS,0),1);
+			int issmaller = 1 - isgreater;
+			int len=(isgreater*fullMessage.length())+ (issmaller*0);
+
+			System.out.print(fullMessage.substring(0,len));
 		}
 		return this.currentPortFolio;
 	}

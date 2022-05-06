@@ -53,15 +53,13 @@ class CalculateOverlapTest {
 		PrintStream outStream = System.out;
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
-		String observed = "";
-		try {
-			List<String> observedPortFolio = obj.execute("CALCULATE_OVERLAP NOFUNDNAME");
-		} catch (IllegalArgumentException ex) {
-			observed = ex.getMessage();
-		}
-
+		
+		
+		List<String> observedPortFolio = obj.execute("CALCULATE_OVERLAP NOFUNDNAMETHISONE");
+		
 		System.setOut(outStream);
 		String expected = "FUND_NOT_FOUND";
+		String observed = outContent.toString().trim();
 
 		assertEquals(expected, observed);
 	}
