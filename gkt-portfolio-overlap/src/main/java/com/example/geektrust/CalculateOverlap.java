@@ -23,7 +23,8 @@ public class CalculateOverlap implements IStockCommand {
 		try {
 			fundSize = completePortFolio.get(fundName).size();
 		} catch (Exception e) {
-			throw new IllegalArgumentException("FUND_NOT_FOUND");
+			System.out.println("FUND_NOT_FOUND");
+			return this.currentPortFolio;
 		}
 		for (String currentFundName : currentPortFolio) {
 			double fundPortFolioUnion = completePortFolio.get(currentFundName).size() + fundSize;
