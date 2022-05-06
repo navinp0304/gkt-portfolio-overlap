@@ -17,11 +17,11 @@ public class AddStock implements IStockCommand {
 	public List<String> execute(String fullCommand) {
 		String[] commands = fullCommand.split(" ");
 		String fundName = commands[1];
-		String stockName = fullCommand.substring(fullCommand.indexOf(fundName) + fundName.length());
+		String stockName = fullCommand.substring(fullCommand.indexOf(fundName) + fundName.length()).trim();
 		try {
 			completePortFolio.get(fundName).add(stockName);
 		} catch (Exception ex) {
-			throw new IllegalArgumentException("FUND_NOT_FOUND");
+			System.out.println("FUND_NOT_FOUND");
 		}
 		return this.currentPortFolio;
 	}

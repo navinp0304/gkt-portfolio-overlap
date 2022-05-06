@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class CommandBroker {
-	private final String fileName;
+	private final String inputFileName;
 	private Map<String, Set<String>> completePortFolio;
 	private List<String> currentPortFolio;
 	private final Map<String, Function<String, List<String>>> commandDispatch = Map.of("CURRENT_PORTFOLIO",
@@ -18,14 +18,14 @@ public class CommandBroker {
 			"ADD_STOCK", (fullCommand) -> new AddStock(completePortFolio, currentPortFolio).execute(fullCommand));
 
 	CommandBroker(String fileName, Map<String, Set<String>> completePortFolio) {
-		this.fileName = fileName;
+		this.inputFileName = fileName;
 		this.completePortFolio = completePortFolio;
 	}
 
 	public final void run() {
 		Scanner input = null;
 		try {
-			input = new Scanner(new File(fileName));
+			input = new Scanner(new File(inputFileName));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			throw new IllegalArgumentException("FILE NOT FOUND");

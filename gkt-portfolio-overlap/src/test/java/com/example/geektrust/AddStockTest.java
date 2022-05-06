@@ -1,7 +1,11 @@
 package com.example.geektrust;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -34,19 +38,18 @@ class AddStockTest {
 	void testExecuteNotPresent() {
 		StocksCollection stocks = new StocksCollection(locationURL);
 		List<String> currentPortfolio = List.of("UTI_NIFTY_INDEX", "AXIS_MIDCAP", "PARAG_PARIKH_FLEXI_CAP");
-		String observed = "";
 		String expected = "FUND_NOT_FOUND";
 		AddStock addStockObj = new AddStock(stocks.getCompletePortFolio(), currentPortfolio);
+		PrintStream outStream = System.out;
+		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(outContent));
+		addStockObj.execute("ADD_STOCK NOFUND NOCIL");
+		System.setOut(outStream);
 
-		try {
-			addStockObj.execute("ADD_STOCK NOFUND NOCIL");
-		} catch (Exception ex) {
-			observed = ex.getMessage();
-		}
-		final String found = observed;
+		final String observed = outContent.toString().trim();
 		assertAll("no file add stock",
 				() -> assertEquals(stocks.getCompletePortFolio().get("PARAG_PARIKH_FLEXI_CAP").contains("NOCIL"),
 						false),
-				() -> assertEquals(found, expected));
+				() -> assertEquals(observed, expected));
 	}
 }

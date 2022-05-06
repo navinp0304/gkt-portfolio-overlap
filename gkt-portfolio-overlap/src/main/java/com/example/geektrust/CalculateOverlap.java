@@ -8,12 +8,13 @@ import java.util.Set;
 public class CalculateOverlap implements IStockCommand {
 	private final Map<String, Set<String>> completePortFolio;
 	private final List<String> currentPortFolio;
-	
-	CalculateOverlap(Map<String, Set<String>> completePortFolio,List<String> currentPortFolio) {
-		this.completePortFolio=completePortFolio;
-		this.currentPortFolio=currentPortFolio;
+	private static final double MYEPS = 1.0e-8;
+
+	CalculateOverlap(Map<String, Set<String>> completePortFolio, List<String> currentPortFolio) {
+		this.completePortFolio = completePortFolio;
+		this.currentPortFolio = currentPortFolio;
 	}
-	
+
 	@Override
 	public List<String> execute(String fullCommand) {
 		String[] commands = fullCommand.split(" ");
@@ -24,12 +25,13 @@ public class CalculateOverlap implements IStockCommand {
 		} catch (Exception e) {
 			throw new IllegalArgumentException("FUND_NOT_FOUND");
 		}
-		for(String currentFundName: currentPortFolio) {
-			double fundPortFolioUnion = completePortFolio.get(currentFundName).size()   +  fundSize ;
-			Set<String> fundPortFolioIntersection = new HashSet<String>(completePortFolio.get(fundName));
+		for (String currentFundName : currentPortFolio) {
+			double fundPortFolioUnion = completePortFolio.get(currentFundName).size() + fundSize;
+			Set<String> fundPortFolioIntersection = new HashSet<>(completePortFolio.get(fundName));
 			fundPortFolioIntersection.retainAll(completePortFolio.get(currentFundName));
-			double overlap = (2.0*fundPortFolioIntersection.size()*100.0)/fundPortFolioUnion;
-			System.out.println(fundName+" "+currentFundName +" "+String.format("%.2f",overlap)+"%");
+			double overlap = (2.0 * fundPortFolioIntersection.size() * 100.0) / fundPortFolioUnion;
+			// if (overlap > MYEPS)
+			System.out.println(fundName + " " + currentFundName + " " + String.format("%.2f", overlap) + "%");
 		}
 		return this.currentPortFolio;
 	}

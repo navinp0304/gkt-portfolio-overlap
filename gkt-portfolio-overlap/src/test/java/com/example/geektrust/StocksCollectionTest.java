@@ -1,6 +1,8 @@
 package com.example.geektrust;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,28 +11,27 @@ class StocksCollectionTest {
 
 	@Test
 	void testGetCompletePortFolio() {
-		StocksCollection obj=new StocksCollection(locationURL);
-		assertAll("Not null",
-				()-> assertNotEquals(obj,null),
-				()->assertNotEquals(obj.getCompletePortFolio().size(),0)
-				);
+		StocksCollection obj = new StocksCollection(locationURL);
+		assertAll("Not null", () -> assertNotEquals(obj, null),
+				() -> assertNotEquals(obj.getCompletePortFolio().size(), 0));
 	}
 
 	@Test
 	void testStocksCollection() {
-		StocksCollection obj=new StocksCollection(locationURL);
-		assertNotEquals(obj,null);
+		StocksCollection obj = new StocksCollection(locationURL);
+		assertNotEquals(obj, null);
 	}
+
 	@Test
 	void testStocksCollectionbadURL() {
-		String observed="";
-		String expected="BAD URL";
+		String observed = "";
+		String expected = "BAD URL";
 		try {
-		StocksCollection obj=new StocksCollection(locationURL+"bad");
-		} catch(Exception ex) {
-			observed=ex.getMessage();
+			StocksCollection obj = new StocksCollection(locationURL + "bad");
+		} catch (Exception ex) {
+			observed = ex.getMessage();
 		}
-		assertEquals(expected,observed);
+		assertEquals(expected, observed);
 	}
 
 }
