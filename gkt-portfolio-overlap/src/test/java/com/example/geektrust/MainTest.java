@@ -11,6 +11,7 @@ class MainTest {
 		Main mainInstance = new Main();
 		String[] args = { "sample_input/input1.txt" };
 		Main.main(args);
+		mainInstance.init();
 		assertNotEquals(mainInstance, null);
 	}
 
