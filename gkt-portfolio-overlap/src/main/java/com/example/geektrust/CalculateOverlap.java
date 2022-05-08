@@ -9,14 +9,17 @@ public class CalculateOverlap implements IStockCommand {
 	private final Map<String, Set<String>> completePortFolio;
 	private final List<String> currentPortFolio;
 	private static final double MYEPS = 1.0e-8;
+	String fullCommand;
+	
 
-	CalculateOverlap(Map<String, Set<String>> completePortFolio, List<String> currentPortFolio) {
+	CalculateOverlap(Map<String, Set<String>> completePortFolio, List<String> currentPortFolio,String fullCommand) {
 		this.completePortFolio = completePortFolio;
 		this.currentPortFolio = currentPortFolio;
+		this.fullCommand = fullCommand;
 	}
 
 	@Override
-	public List<String> execute(String fullCommand) {
+	public List<String> execute() {
 		String[] commands = fullCommand.split(" ");
 		String fundName = commands[1];
 		int fundSize = 0;

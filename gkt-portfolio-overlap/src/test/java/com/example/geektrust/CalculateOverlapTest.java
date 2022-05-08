@@ -17,8 +17,9 @@ class CalculateOverlapTest {
 	void testCalculateOverlap() {
 		StocksCollection stocks = new StocksCollection(locationURL);
 		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
+		String fullCommand="CALCULATE_OVERLAP MIRAE_ASSET_EMERGING_BLUECHIP";
 
-		CalculateOverlap obj = new CalculateOverlap(stocks.getCompletePortFolio(), currentPortfolio);
+		CalculateOverlap obj = new CalculateOverlap(stocks.getCompletePortFolio(), currentPortfolio,fullCommand);
 		assertNotEquals(obj, null);
 	}
 
@@ -26,13 +27,13 @@ class CalculateOverlapTest {
 	void testExecute() {
 		StocksCollection stocks = new StocksCollection(locationURL);
 		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
-
-		CalculateOverlap obj = new CalculateOverlap(stocks.getCompletePortFolio(), currentPortfolio);
+		String fullCommand="CALCULATE_OVERLAP MIRAE_ASSET_EMERGING_BLUECHIP";
+		CalculateOverlap obj = new CalculateOverlap(stocks.getCompletePortFolio(), currentPortfolio,fullCommand);
 		PrintStream outStream = System.out;
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
 
-		List<String> observedPortFolio = obj.execute("CALCULATE_OVERLAP MIRAE_ASSET_EMERGING_BLUECHIP");
+		List<String> observedPortFolio = obj.execute();
 
 		System.setOut(outStream);
 		List<String> observed = List.of(outContent.toString().split("\n"));
@@ -48,14 +49,14 @@ class CalculateOverlapTest {
 	void testExecuteNoFund() {
 		StocksCollection stocks = new StocksCollection(locationURL);
 		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
-
-		CalculateOverlap obj = new CalculateOverlap(stocks.getCompletePortFolio(), currentPortfolio);
+		String fullCommand = "CALCULATE_OVERLAP NOFUNDNAMETHISONE";
+		CalculateOverlap obj = new CalculateOverlap(stocks.getCompletePortFolio(), currentPortfolio,fullCommand);
 		PrintStream outStream = System.out;
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
 		
 		
-		List<String> observedPortFolio = obj.execute("CALCULATE_OVERLAP NOFUNDNAMETHISONE");
+		List<String> observedPortFolio = obj.execute();
 		
 		System.setOut(outStream);
 		String expected = "FUND_NOT_FOUND";

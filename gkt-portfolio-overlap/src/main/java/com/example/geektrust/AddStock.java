@@ -5,22 +5,25 @@ import java.util.Map;
 import java.util.Set;
 
 public class AddStock implements IStockCommand {
-	private Map<String, Set<String>> completePortFolio;
 	private final List<String> currentPortFolio;
+	private final String fullCommand;
+	private final int stockOffset;
+	private final Set<String> fundCollection;
 
-	AddStock(Map<String, Set<String>> completePortFolio, List<String> currentPortFolio) {
-		this.completePortFolio = completePortFolio;
+	AddStock(Map<String, Set<String>> completePortFolio, List<String> currentPortFolio, String fullCommand) {
 		this.currentPortFolio = currentPortFolio;
+		this.fullCommand = fullCommand;
+		String fundName = fullCommand.split(" ")[1];
+		stockOffset = fullCommand.indexOf(fundName) + fundName.length();
+		fundCollection = completePortFolio.get(fundName);
 	}
 
 	@Override
-	public List<String> execute(String fullCommand) {
-		String[] commands = fullCommand.split(" ");
-		String fundName = commands[1];
-		String stockName = fullCommand.substring(fullCommand.indexOf(fundName) + fundName.length()).trim();
-		try {
-			completePortFolio.get(fundName).add(stockName);
-		} catch (Exception ex) {
+	public List<String> execute() {
+		String stockName = fullCommand.substring(stockOffset);
+		if (fundCollection != null) {
+			fundCollection.add(stockName.trim());
+		} else {
 			System.out.println("FUND_NOT_FOUND");
 		}
 		return this.currentPortFolio;
