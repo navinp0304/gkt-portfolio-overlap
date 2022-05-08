@@ -10,12 +10,12 @@ import java.util.function.Function;
 
 public class CommandBroker {
 	private final String inputFileName;
-	private Map<String, Set<String>> completePortFolio;
+	private Map<String, Set<String>> completePortFolio = null;
 	private List<String> currentPortFolio;
 	private final Map<String, Function<String, List<String>>> commandDispatch = Map.of("CURRENT_PORTFOLIO",
-			(fullCommand) -> new CurrentPortFolio().execute(fullCommand), "CALCULATE_OVERLAP",
-			(fullCommand) -> new CalculateOverlap(completePortFolio, currentPortFolio).execute(fullCommand),
-			"ADD_STOCK", (fullCommand) -> new AddStock(completePortFolio, currentPortFolio).execute(fullCommand));
+			(fullCommand) -> new CurrentPortFolio(fullCommand).execute(), "CALCULATE_OVERLAP",
+			(fullCommand) -> new CalculateOverlap(completePortFolio, currentPortFolio,fullCommand).execute(),
+			"ADD_STOCK", (fullCommand) -> new AddStock(completePortFolio, currentPortFolio,fullCommand).execute());
 
 	CommandBroker(String fileName, Map<String, Set<String>> completePortFolio) {
 		this.inputFileName = fileName;
@@ -30,11 +30,12 @@ public class CommandBroker {
 			// TODO Auto-generated catch block
 			throw new IllegalArgumentException("FILE NOT FOUND");
 		}
-
+		Function<String, List<String>> commandFunction = null;
 		while (input.hasNextLine()) {
-			String fullCommand = input.nextLine();
+			String fullCommand = new String(input.nextLine());
 			String[] commands = fullCommand.split(" ");
-			this.currentPortFolio = commandDispatch.get(commands[0]).apply(fullCommand);
+			commandFunction = commandDispatch.get(commands[0]);
+			this.currentPortFolio = commandFunction.apply(fullCommand);
 		}
 		input.close();
 	}

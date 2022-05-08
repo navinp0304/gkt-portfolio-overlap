@@ -10,15 +10,17 @@ class CurrentPortFolioTest {
 
 	@Test
 	void testGetCurrentPortFolio() {
-		CurrentPortFolio currentPortFolioObj = new CurrentPortFolio();
+		String fullCommand = "CURRENT_PORTFOLIO UTI_NIFTY_INDEX AXIS_MIDCAP PARAG_PARIKH_FLEXI_CAP";
+		CurrentPortFolio currentPortFolioObj = new CurrentPortFolio(fullCommand);
 		assertEquals(currentPortFolioObj.getCurrentPortFolio(), null);
 	}
 
 	@Test
 	void testExecute() {
-		CurrentPortFolio currentPortFolioObj = new CurrentPortFolio();
+		String fullCommand = "CURRENT_PORTFOLIO UTI_NIFTY_INDEX AXIS_MIDCAP PARAG_PARIKH_FLEXI_CAP";
+		CurrentPortFolio currentPortFolioObj = new CurrentPortFolio(fullCommand);
 		List<String> parsedList = currentPortFolioObj
-				.execute("CURRENT_PORTFOLIO UTI_NIFTY_INDEX AXIS_MIDCAP PARAG_PARIKH_FLEXI_CAP");
+				.execute();
 		List<String> expected = List.of("UTI_NIFTY_INDEX", "AXIS_MIDCAP", "PARAG_PARIKH_FLEXI_CAP");
 		assertEquals(parsedList, expected);
 	}
