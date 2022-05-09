@@ -21,7 +21,7 @@ public class AddStock implements IStockCommand {
 
 		String stockName = fullCommand.substring(stockOffset);
 
-		stocks.addStockFund(fundName, stockName);
+		stocks.addStockFund(fundName, stockName.trim());
 
 	}
 
