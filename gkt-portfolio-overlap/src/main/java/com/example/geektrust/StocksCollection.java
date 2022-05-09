@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class StocksCollection {
 
-	private Map<String, Set<String>> completePortFolio = new HashMap<>();
+	private final Map<String, Set<String>> completePortFolio = new HashMap<>();
 	private final Map<String, Integer> completePortFolioSize = new HashMap<>();
 
 	public final Map<String, Set<String>> getCompletePortFolio() {
