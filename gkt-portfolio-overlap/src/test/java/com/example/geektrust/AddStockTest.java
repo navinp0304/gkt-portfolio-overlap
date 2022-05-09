@@ -19,7 +19,7 @@ class AddStockTest {
 		StocksCollection stocks = new StocksCollection(locationURL);
 		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
 		String fullCommand="ADD_STOCK AXIS_BLUECHIP TCS";
-		AddStock addStockObj = new AddStock(stocks.getCompletePortFolio(), currentPortfolio,fullCommand);
+		AddStock addStockObj = new AddStock(stocks, currentPortfolio,fullCommand);
 		assertNotEquals(addStockObj, null);
 	}
 
@@ -28,7 +28,7 @@ class AddStockTest {
 		StocksCollection stocks = new StocksCollection(locationURL);
 		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
 		String fullCommand="ADD_STOCK AXIS_BLUECHIP TCS";
-		AddStock addStockObj = new AddStock(stocks.getCompletePortFolio(), currentPortfolio,fullCommand);
+		AddStock addStockObj = new AddStock(stocks, currentPortfolio,fullCommand);
 		
 		addStockObj.execute();
 		assertNotEquals(stocks.getCompletePortFolio().get("AXIS_BLUECHIP").contains("TCS"), null);
@@ -40,10 +40,11 @@ class AddStockTest {
 		List<String> currentPortfolio = List.of("UTI_NIFTY_INDEX", "AXIS_MIDCAP", "PARAG_PARIKH_FLEXI_CAP");
 		String expected = "FUND_NOT_FOUND";
 		String fullCommand="ADD_STOCK NOFUND NOCIL";
-		AddStock addStockObj = new AddStock(stocks.getCompletePortFolio(), currentPortfolio,fullCommand);
 		PrintStream outStream = System.out;
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
+
+		AddStock addStockObj = new AddStock(stocks, currentPortfolio,fullCommand);
 		addStockObj.execute();
 		System.setOut(outStream);
 

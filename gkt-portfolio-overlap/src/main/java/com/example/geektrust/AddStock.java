@@ -1,31 +1,32 @@
 package com.example.geektrust;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class AddStock implements IStockCommand {
+	StocksCollection stocks;
 	private final List<String> currentPortFolio;
-	private final String fullCommand;
-	private final int stockOffset;
-	private final Set<String> fundCollection;
 
-	AddStock(Map<String, Set<String>> completePortFolio, List<String> currentPortFolio, String fullCommand) {
+	AddStock(StocksCollection stocks, List<String> currentPortFolio, String fullCommand) {
+		this.stocks= stocks;
 		this.currentPortFolio = currentPortFolio;
-		this.fullCommand = fullCommand;
 		String fundName = fullCommand.split(" ")[1];
-		stockOffset = fullCommand.indexOf(fundName) + fundName.length();
-		fundCollection = completePortFolio.get(fundName);
+		int stockOffset = fullCommand.indexOf(fundName) + fundName.length();
+		Set<String> fundCollection = stocks.getFundStocks(fundName);
+	
+		if (fundCollection == null) {
+			System.out.println("FUND_NOT_FOUND");
+			return;
+		}
+
+		String stockName = fullCommand.substring(stockOffset);
+
+		stocks.addStockFund(fundName, stockName);
+
 	}
 
 	@Override
 	public List<String> execute() {
-		String stockName = fullCommand.substring(stockOffset);
-		if (fundCollection != null) {
-			fundCollection.add(stockName.trim());
-		} else {
-			System.out.println("FUND_NOT_FOUND");
-		}
 		return this.currentPortFolio;
 	}
 }

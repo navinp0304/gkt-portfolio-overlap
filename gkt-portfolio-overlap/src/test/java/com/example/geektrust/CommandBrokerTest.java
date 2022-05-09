@@ -16,8 +16,7 @@ class CommandBrokerTest {
 	@Test
 	void testCommandBroker() {
 		StocksCollection stockCollection = new StocksCollection(locationURL);
-		CommandBroker commandBroker = new CommandBroker("sample_input/input1.txt",
-				stockCollection.getCompletePortFolio());
+		CommandBroker commandBroker = new CommandBroker("sample_input/input1.txt",	stockCollection);
 		assertNotEquals(commandBroker, null);
 	}
 
@@ -26,7 +25,7 @@ class CommandBrokerTest {
 		StocksCollection stockCollection = new StocksCollection(locationURL);
 		String observed = "";
 		String expected = "FILE NOT FOUND";
-		CommandBroker commandBroker = new CommandBroker("nofile.txt", stockCollection.getCompletePortFolio());
+		CommandBroker commandBroker = new CommandBroker("nofile.txt", stockCollection);
 		try {
 			commandBroker.run();
 		} catch (Exception ex) {
@@ -39,7 +38,7 @@ class CommandBrokerTest {
 	void testRun() {
 		StocksCollection stockCollection = new StocksCollection(locationURL);
 		CommandBroker commandBroker = new CommandBroker("sample_input/input1.txt",
-				stockCollection.getCompletePortFolio());
+				stockCollection);
 		InputStream stdin = System.in;
 		PrintStream stdout = System.out;
 		String inputData = "CURRENT_PORTFOLIO AXIS_BLUECHIP ICICI_PRU_BLUECHIP UTI_NIFTY_INDEX\n"

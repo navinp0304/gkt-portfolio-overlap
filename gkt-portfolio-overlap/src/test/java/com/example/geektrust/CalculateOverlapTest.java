@@ -19,7 +19,7 @@ class CalculateOverlapTest {
 		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
 		String fullCommand="CALCULATE_OVERLAP MIRAE_ASSET_EMERGING_BLUECHIP";
 
-		CalculateOverlap obj = new CalculateOverlap(stocks.getCompletePortFolio(), currentPortfolio,fullCommand);
+		CalculateOverlap obj = new CalculateOverlap(stocks, currentPortfolio,fullCommand);
 		assertNotEquals(obj, null);
 	}
 
@@ -28,10 +28,11 @@ class CalculateOverlapTest {
 		StocksCollection stocks = new StocksCollection(locationURL);
 		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
 		String fullCommand="CALCULATE_OVERLAP MIRAE_ASSET_EMERGING_BLUECHIP";
-		CalculateOverlap obj = new CalculateOverlap(stocks.getCompletePortFolio(), currentPortfolio,fullCommand);
 		PrintStream outStream = System.out;
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
+		CalculateOverlap obj = new CalculateOverlap(stocks, currentPortfolio,fullCommand);
+
 
 		List<String> observedPortFolio = obj.execute();
 
@@ -50,10 +51,11 @@ class CalculateOverlapTest {
 		StocksCollection stocks = new StocksCollection(locationURL);
 		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
 		String fullCommand = "CALCULATE_OVERLAP NOFUNDNAMETHISONE";
-		CalculateOverlap obj = new CalculateOverlap(stocks.getCompletePortFolio(), currentPortfolio,fullCommand);
 		PrintStream outStream = System.out;
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
+		CalculateOverlap obj = new CalculateOverlap(stocks, currentPortfolio,fullCommand);
+
 		
 		
 		List<String> observedPortFolio = obj.execute();

@@ -5,29 +5,27 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.function.Function;
 
 public class CommandBroker {
 	private final String inputFileName;
-	private Map<String, Set<String>> completePortFolio = null;
+	private StocksCollection stocks=null;
 	private List<String> currentPortFolio;
 	private final Map<String, Function<String, List<String>>> commandDispatch = Map.of("CURRENT_PORTFOLIO",
 			(fullCommand) -> new CurrentPortFolio(fullCommand).execute(), "CALCULATE_OVERLAP",
-			(fullCommand) -> new CalculateOverlap(completePortFolio, currentPortFolio,fullCommand).execute(),
-			"ADD_STOCK", (fullCommand) -> new AddStock(completePortFolio, currentPortFolio,fullCommand).execute());
+			(fullCommand) -> new CalculateOverlap(stocks, currentPortFolio,fullCommand).execute(),
+			"ADD_STOCK", (fullCommand) -> new AddStock(stocks, currentPortFolio,fullCommand).execute());
 
-	CommandBroker(String fileName, Map<String, Set<String>> completePortFolio) {
+	CommandBroker(String fileName, StocksCollection stocks ) {
 		this.inputFileName = fileName;
-		this.completePortFolio = completePortFolio;
+		this.stocks = stocks;
 	}
 
 	public final void run() {
-		Scanner input = null;
+		Scanner input ;
 		try {
 			input = new Scanner(new File(inputFileName));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			throw new IllegalArgumentException("FILE NOT FOUND");
 		}
 		Function<String, List<String>> commandFunction = null;
