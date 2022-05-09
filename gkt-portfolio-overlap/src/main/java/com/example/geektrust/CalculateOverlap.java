@@ -12,7 +12,7 @@ public class CalculateOverlap implements IStockCommand {
 	Set<String> overlapFundCollection;
 	String fundName;
 
-	void calculateOverlap() {
+	private final void calculateOverlap() {
 
 		int fundSize = overlapFundCollection.size();
 		String fullMessage = "";
@@ -45,7 +45,6 @@ public class CalculateOverlap implements IStockCommand {
 			return;
 		}
 		calculateOverlap();
-
 	}
 
 	@Override

@@ -11,13 +11,13 @@ public class AddStock implements IStockCommand {
 		this.stocks= stocks;
 		this.currentPortFolio = currentPortFolio;
 		String fundName = fullCommand.split(" ")[1];
-		int stockOffset = fullCommand.indexOf(fundName) + fundName.length();
 		Set<String> fundCollection = stocks.getFundStocks(fundName);
 	
 		if (fundCollection == null) {
 			System.out.println("FUND_NOT_FOUND");
 			return;
 		}
+		int stockOffset = fullCommand.indexOf(fundName) + fundName.length();
 
 		String stockName = fullCommand.substring(stockOffset);
 
