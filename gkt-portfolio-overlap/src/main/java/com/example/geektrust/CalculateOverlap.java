@@ -13,6 +13,11 @@ public class CalculateOverlap {
 	void fundNotFound() {
 		System.out.println("FUND_NOT_FOUND");
 	}
+	
+	Boolean printMessage(String message) {
+		System.out.print(message);
+		return true;
+	}
 
 	void calculateOverlap() {
 
@@ -23,17 +28,14 @@ public class CalculateOverlap {
 			Set<String> fundPortFolioIntersection = new HashSet<>(stocks.getFundStocks(fundName));
 			fundPortFolioIntersection.retainAll(stocks.getFundStocks(currentFundName));
 			double overlap = (2.0 * fundPortFolioIntersection.size() * 100.0) / fundPortFolioUnion;
-			// if (overlap > MYEPS)
+			//if (overlap > MYEPS) continue;
 			// System.out.println(fundName + " " + currentFundName + " " +
 			// String.format("%.2f", overlap) + "%");
 			fullMessage = fundName + " " + currentFundName + " " + String.format("%.2f", overlap) + "%\n";
 			// String printMessage = (overlap > MYEPS) ? fullMessage:emptyMessage;
+			
+			Boolean either = (overlap>MYEPS)?printMessage(fullMessage):printMessage("") ; 
 
-			int isgreater = (int) Math.min(Math.max(overlap - MYEPS, 0), 1);
-			int issmaller = 1 - isgreater;
-			int len = (isgreater * fullMessage.length()) + (issmaller * 0);
-
-			System.out.print(fullMessage.substring(0, len));
 		}
 	}
 
@@ -43,11 +45,14 @@ public class CalculateOverlap {
 		this.fundName = fullCommand.split(" ")[1];
 
 		overlapFundCollection = stocks.getFundStocks(fundName);
-		if (overlapFundCollection == null) {
-			fundNotFound();
+		if (overlapFundCollection != null) {
+			calculateOverlap();
 			return;
 		}
-		calculateOverlap();
+		
+		fundNotFound();
+		
+
 
 	}
 
