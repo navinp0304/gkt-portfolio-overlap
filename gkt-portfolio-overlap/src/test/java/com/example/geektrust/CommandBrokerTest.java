@@ -16,7 +16,7 @@ class CommandBrokerTest {
 	@Test
 	void testCommandBroker() {
 		StocksCollection stockCollection = new StocksCollection(locationURL);
-		CommandBroker commandBroker = new CommandBroker("sample_input/input1.txt",	stockCollection);
+		CommandBroker commandBroker = new CommandBroker("sample_input/input1.txt", stockCollection);
 		assertNotEquals(commandBroker, null);
 	}
 
@@ -37,8 +37,7 @@ class CommandBrokerTest {
 	@Test
 	void testRun() {
 		StocksCollection stockCollection = new StocksCollection(locationURL);
-		CommandBroker commandBroker = new CommandBroker("sample_input/input1.txt",
-				stockCollection);
+		CommandBroker commandBroker = new CommandBroker("sample_input/input1.txt", stockCollection);
 		InputStream stdin = System.in;
 		PrintStream stdout = System.out;
 		String inputData = "CURRENT_PORTFOLIO AXIS_BLUECHIP ICICI_PRU_BLUECHIP UTI_NIFTY_INDEX\n"
