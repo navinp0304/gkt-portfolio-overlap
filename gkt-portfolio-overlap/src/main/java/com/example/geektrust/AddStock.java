@@ -1,21 +1,23 @@
 package com.example.geektrust;
 
-import java.util.List;
 import java.util.Set;
 
-public class AddStock implements IStockCommand {
+public class AddStock {
 	StocksCollection stocks;
-	private final List<String> currentPortFolio;
 
-	AddStock(StocksCollection stocks, List<String> currentPortFolio, String fullCommand) {
-		this.stocks= stocks;
-		this.currentPortFolio = currentPortFolio;
+	void printNoFund() {
+		System.out.println("FUND_NOT_FOUND");
+
+	}
+
+	AddStock(StocksCollection stocks, String fullCommand) {
+		this.stocks = stocks;
 		String fundName = fullCommand.split(" ")[1];
 		int stockOffset = fullCommand.indexOf(fundName) + fundName.length();
 		Set<String> fundCollection = stocks.getFundStocks(fundName);
-	
+
 		if (fundCollection == null) {
-			System.out.println("FUND_NOT_FOUND");
+			printNoFund();
 			return;
 		}
 
@@ -25,8 +27,4 @@ public class AddStock implements IStockCommand {
 
 	}
 
-	@Override
-	public List<String> execute() {
-		return this.currentPortFolio;
-	}
 }

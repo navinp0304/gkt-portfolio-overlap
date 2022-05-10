@@ -1,22 +1,24 @@
 package com.example.geektrust;
 
-
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public class CalculateOverlap implements IStockCommand {
+public class CalculateOverlap {
 	StocksCollection stocks;
-	private final List<String> currentPortFolio;
+	private final CurrentPortFolio currentPortFolio;
 	private static final double MYEPS = 1.0e-8;
 	Set<String> overlapFundCollection;
 	String fundName;
+
+	void fundNotFound() {
+		System.out.println("FUND_NOT_FOUND");
+	}
 
 	void calculateOverlap() {
 
 		int fundSize = overlapFundCollection.size();
 		String fullMessage = "";
-		for (String currentFundName : currentPortFolio) {
+		for (String currentFundName : currentPortFolio.getCurrentPortFolio()) {
 			double fundPortFolioUnion = stocks.getFundSize(currentFundName) + fundSize;
 			Set<String> fundPortFolioIntersection = new HashSet<>(stocks.getFundStocks(fundName));
 			fundPortFolioIntersection.retainAll(stocks.getFundStocks(currentFundName));
@@ -34,22 +36,19 @@ public class CalculateOverlap implements IStockCommand {
 			System.out.print(fullMessage.substring(0, len));
 		}
 	}
-	CalculateOverlap(StocksCollection stocks, List<String> currentPortFolio, String fullCommand) {
+
+	CalculateOverlap(StocksCollection stocks, CurrentPortFolio currentPortFolio, String fullCommand) {
 		this.currentPortFolio = currentPortFolio;
 		this.stocks = stocks;
 		this.fundName = fullCommand.split(" ")[1];
-		
+
 		overlapFundCollection = stocks.getFundStocks(fundName);
 		if (overlapFundCollection == null) {
-			System.out.println("FUND_NOT_FOUND");
+			fundNotFound();
 			return;
 		}
 		calculateOverlap();
 
 	}
 
-	@Override
-	public List<String> execute() {
-		return this.currentPortFolio;
-	}
 }
