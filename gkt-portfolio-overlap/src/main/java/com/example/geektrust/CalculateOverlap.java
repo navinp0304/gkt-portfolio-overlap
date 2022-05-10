@@ -1,6 +1,5 @@
 package com.example.geektrust;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,8 +10,8 @@ public class CalculateOverlap {
 	Set<String> overlapFundCollection;
 	String fundName;
 
-	private void calculateOverlap() {
 
+	private Boolean calculateOverlap() {
 		int fundSize = overlapFundCollection.size();
 		String fullMessage = "";
 		for (String currentFundName : currentPortFolio.getCurrentPortFolio()) {
@@ -32,19 +31,25 @@ public class CalculateOverlap {
 
 			System.out.print(fullMessage.substring(0, len));
 		}
+		return true;
 	}
-	
+
+	private Boolean printFundNotFound() {
+		System.out.println("FUND_NOT_FOUND");
+		return true;
+	}
+
 	CalculateOverlap(StocksCollection stocks, CurrentPortFolio currentPortFolio, String fullCommand) {
 		this.currentPortFolio = currentPortFolio;
 		this.stocks = stocks;
 		this.fundName = fullCommand.split(" ")[1];
-		
+
 		overlapFundCollection = stocks.getFundStocks(fundName);
-		if (overlapFundCollection == null) {
-			System.out.println("FUND_NOT_FOUND");
-			return;
-		}
-		calculateOverlap();
+		Boolean either = ((overlapFundCollection == null) && printFundNotFound())
+				|| ((overlapFundCollection != null) && calculateOverlap());
+		String dummy = "";
+		int len=either.compareTo(true);
+		System.out.print(dummy.substring(len));
 	}
 
 }
