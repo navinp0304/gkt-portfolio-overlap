@@ -17,8 +17,13 @@ class AddStockTest {
 	void testAddStock() {
 
 		StocksCollection stocks = new StocksCollection(locationURL);
+<<<<<<< HEAD
 		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
 		String fullCommand = "ADD_STOCK AXIS_BLUECHIP TCS";
+=======
+//		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
+		String fullCommand="ADD_STOCK AXIS_BLUECHIP TCS";
+>>>>>>> 6e73b13f80a1295c9eb875830abf03eafd457785
 		AddStock addStockObj = new AddStock(stocks, fullCommand);
 		assertNotEquals(addStockObj, null);
 	}
@@ -26,17 +31,25 @@ class AddStockTest {
 	@Test
 	void testExecute() {
 		StocksCollection stocks = new StocksCollection(locationURL);
+<<<<<<< HEAD
 		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
 		String fullCommand = "ADD_STOCK AXIS_BLUECHIP TCS";
 		AddStock addStockObj = new AddStock(stocks, fullCommand);
 
+=======
+	//	List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
+		String fullCommand="ADD_STOCK AXIS_BLUECHIP TCS";
+		AddStock addStockObj = new AddStock(stocks, fullCommand);
+		
+		
+>>>>>>> 6e73b13f80a1295c9eb875830abf03eafd457785
 		assertNotEquals(stocks.getCompletePortFolio().get("AXIS_BLUECHIP").contains("TCS"), null);
 	}
 
 	@Test
 	void testExecuteNotPresent() {
 		StocksCollection stocks = new StocksCollection(locationURL);
-		List<String> currentPortfolio = List.of("UTI_NIFTY_INDEX", "AXIS_MIDCAP", "PARAG_PARIKH_FLEXI_CAP");
+	//	List<String> currentPortfolio = List.of("UTI_NIFTY_INDEX", "AXIS_MIDCAP", "PARAG_PARIKH_FLEXI_CAP");
 		String expected = "FUND_NOT_FOUND";
 		String fullCommand = "ADD_STOCK NOFUND NOCIL";
 		PrintStream outStream = System.out;
@@ -44,6 +57,10 @@ class AddStockTest {
 		System.setOut(new PrintStream(outContent));
 
 		AddStock addStockObj = new AddStock(stocks, fullCommand);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6e73b13f80a1295c9eb875830abf03eafd457785
 		System.setOut(outStream);
 
 		final String observed = outContent.toString().trim();

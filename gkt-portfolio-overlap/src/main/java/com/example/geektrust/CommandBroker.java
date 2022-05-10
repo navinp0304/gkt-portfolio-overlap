@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Consumer;
+<<<<<<< HEAD
 
 public class CommandBroker {
 	private final String inputFileName;
@@ -16,6 +17,21 @@ public class CommandBroker {
 			(fullCommand) -> new AddStock(stocks, fullCommand));
 
 	CommandBroker(String fileName, StocksCollection stocks) {
+=======
+import java.util.function.Function;
+
+public class CommandBroker {
+	private final String inputFileName;
+	private StocksCollection stocks=null;
+	//private List<String> currentPortFolio;
+	CurrentPortFolio currentPortFolio;
+
+	private final Map<String, Consumer<String>> commandDispatch = Map.of(
+			"CURRENT_PORTFOLIO",(fullCommand) ->{ this.currentPortFolio= new CurrentPortFolio(fullCommand); }, 
+			"CALCULATE_OVERLAP",(fullCommand) -> new CalculateOverlap(stocks, currentPortFolio,fullCommand),
+			"ADD_STOCK", (fullCommand) -> new AddStock(stocks, fullCommand));
+	CommandBroker(String fileName, StocksCollection stocks ) {
+>>>>>>> 6e73b13f80a1295c9eb875830abf03eafd457785
 		this.inputFileName = fileName;
 		this.stocks = stocks;
 	}

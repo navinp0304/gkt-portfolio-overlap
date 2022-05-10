@@ -18,4 +18,8 @@ public class CurrentPortFolio {
 		return currentPortFolio;
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6e73b13f80a1295c9eb875830abf03eafd457785
 }
