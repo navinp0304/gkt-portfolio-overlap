@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class StocksCollection {
 
 	private final Map<String, Set<String>> completePortFolio = new HashMap<>();
-	private final Map<String, Integer> completePortFolioSize = new HashMap<>();
 
 	public final Map<String, Set<String>> getCompletePortFolio() {
 		return completePortFolio;
@@ -24,16 +23,12 @@ public class StocksCollection {
 		return completePortFolio.get(fundName);
 	}
 
-	public final int getFundSize(String fundName) {
-		return completePortFolioSize.get(fundName);
-	}
 
 	public void addStockFund(String fundName, String stockName) {
 		Set<String> fundStocks = new HashSet<>(completePortFolio.get(fundName));
 		fundStocks.add(stockName);
 		int fundSize = fundStocks.size();
 		completePortFolio.put(fundName, fundStocks);
-		completePortFolioSize.put(fundName, fundSize);
 	}
 
 	StocksCollection(String locationURL) {
@@ -54,7 +49,6 @@ public class StocksCollection {
 				Set<String> uniqueStockCollection = new HashSet<>();
 				uniqueStockCollection.addAll(Arrays.asList(stocksCollection));
 				completePortFolio.put(fundName, uniqueStockCollection);
-				completePortFolioSize.put(fundName, uniqueStockCollection.size());
 			}
 		} catch (IOException e) {
 			throw new IllegalArgumentException("BAD URL");

@@ -5,9 +5,9 @@ import java.util.Set;
 public class AddStock {
 	StocksCollection stocks;
 
-	void printNoFund() {
+	Boolean printNoFund() {
 		System.out.println("FUND_NOT_FOUND");
-
+		return true;
 	}
 
 
@@ -15,22 +15,18 @@ public class AddStock {
 	String fundName; 
 	Set<String> fundCollection;
 
-	void checkNoFund(StocksCollection stocks) {
-		try {
+	Boolean addFundStock(StocksCollection stocks) {
 			int stockOffset = fullCommand.indexOf(fundName) + fundName.length();
 			String stockName = new String(fullCommand.substring(stockOffset));
-			stockOffset += fundCollection.size();
-			stocks.addStockFund(fundName, stockName.trim());
-		} catch (Exception ex) {
-			System.out.println("FUND_NOT_FOUND");
 
-		}
+			stocks.addStockFund(fundName, stockName.trim());
+			return true;
 	}
 
 	AddStock(StocksCollection stocks, String fullCommand) {
 		this.fullCommand = fullCommand;
 		fundName = fullCommand.split(" ")[1];
 		fundCollection = stocks.getFundStocks(fundName);
-		checkNoFund(stocks);
+		Boolean either = (fundCollection!=null)?addFundStock(stocks):printNoFund();
 	}
 }
