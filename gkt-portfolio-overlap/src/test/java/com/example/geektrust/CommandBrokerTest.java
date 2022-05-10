@@ -56,7 +56,9 @@ class CommandBrokerTest {
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
 		System.setIn(new ByteArrayInputStream(inputData.getBytes()));
+		
 		commandBroker.run();
+		
 		System.setIn(stdin);
 		System.setOut(stdout);
 		assertEquals(expected, outContent.toString());

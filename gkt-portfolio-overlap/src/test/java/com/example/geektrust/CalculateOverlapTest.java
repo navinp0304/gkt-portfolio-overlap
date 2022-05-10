@@ -16,7 +16,9 @@ class CalculateOverlapTest {
 	@Test
 	void testCalculateOverlap() {
 		StocksCollection stocks = new StocksCollection(locationURL);
-		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
+		String cfullCommand = "CURRENT_PORTFOLIO AXIS_BLUECHIP ICICI_PRU_BLUECHIP UTI_NIFTY_INDEX";
+		CurrentPortFolio currentPortfolio = new CurrentPortFolio(cfullCommand);
+		//List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
 		String fullCommand="CALCULATE_OVERLAP MIRAE_ASSET_EMERGING_BLUECHIP";
 
 		CalculateOverlap obj = new CalculateOverlap(stocks, currentPortfolio,fullCommand);
@@ -26,7 +28,9 @@ class CalculateOverlapTest {
 	@Test
 	void testExecute() {
 		StocksCollection stocks = new StocksCollection(locationURL);
-		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
+		String cfullCommand = "CURRENT_PORTFOLIO AXIS_BLUECHIP ICICI_PRU_BLUECHIP UTI_NIFTY_INDEX";
+		CurrentPortFolio currentPortfolio = new CurrentPortFolio(cfullCommand);
+//		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
 		String fullCommand="CALCULATE_OVERLAP MIRAE_ASSET_EMERGING_BLUECHIP";
 		PrintStream outStream = System.out;
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -34,7 +38,7 @@ class CalculateOverlapTest {
 		CalculateOverlap obj = new CalculateOverlap(stocks, currentPortfolio,fullCommand);
 
 
-		List<String> observedPortFolio = obj.execute();
+	
 
 		System.setOut(outStream);
 		List<String> observed = List.of(outContent.toString().split("\n"));
@@ -42,14 +46,16 @@ class CalculateOverlapTest {
 				"MIRAE_ASSET_EMERGING_BLUECHIP ICICI_PRU_BLUECHIP 38.10%",
 				"MIRAE_ASSET_EMERGING_BLUECHIP UTI_NIFTY_INDEX 65.52%");
 
-		assertAll("check overlap", () -> assertEquals(observed, expected),
-				() -> assertEquals(currentPortfolio, observedPortFolio));
+		assertAll("check overlap", () -> assertEquals(observed, expected));
 	}
 
 	@Test
 	void testExecuteNoFund() {
 		StocksCollection stocks = new StocksCollection(locationURL);
-		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
+		String cfullCommand = "CURRENT_PORTFOLIO AXIS_BLUECHIP ICICI_PRU_BLUECHIP UTI_NIFTY_INDEX";
+		CurrentPortFolio currentPortfolio = new CurrentPortFolio(cfullCommand);
+
+//		List<String> currentPortfolio = List.of("AXIS_BLUECHIP", "ICICI_PRU_BLUECHIP", "UTI_NIFTY_INDEX");
 		String fullCommand = "CALCULATE_OVERLAP NOFUNDNAMETHISONE";
 		PrintStream outStream = System.out;
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -58,7 +64,6 @@ class CalculateOverlapTest {
 
 		
 		
-		List<String> observedPortFolio = obj.execute();
 		
 		System.setOut(outStream);
 		String expected = "FUND_NOT_FOUND";
