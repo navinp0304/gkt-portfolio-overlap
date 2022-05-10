@@ -8,10 +8,9 @@ public class CalculateOverlap {
 	private final CurrentPortFolio currentPortFolio;
 	private static final double MYEPS = 1.0e-8;
 	Set<String> overlapFundCollection;
+	Set<String> currentFundCollection;
 	String fundName;
 
-
-	
 	Boolean printMessage(String message) {
 		System.out.print(message);
 		return true;
@@ -22,17 +21,18 @@ public class CalculateOverlap {
 		int fundSize = overlapFundCollection.size();
 		String fullMessage = "";
 		for (String currentFundName : currentPortFolio.getCurrentPortFolio()) {
-			double fundPortFolioUnion = stocks.getFundStocks(currentFundName).size() + fundSize;
+			currentFundCollection = stocks.getFundStocks(currentFundName);
+			double fundPortFolioUnion = currentFundCollection.size() + fundSize;
 			Set<String> fundPortFolioIntersection = new HashSet<>(stocks.getFundStocks(fundName));
 			fundPortFolioIntersection.retainAll(stocks.getFundStocks(currentFundName));
 			double overlap = (2.0 * fundPortFolioIntersection.size() * 100.0) / fundPortFolioUnion;
-			//if (overlap > MYEPS) continue;
+			// if (overlap > MYEPS) continue;
 			// System.out.println(fundName + " " + currentFundName + " " +
 			// String.format("%.2f", overlap) + "%");
 			fullMessage = fundName + " " + currentFundName + " " + String.format("%.2f", overlap) + "%\n";
 			// String printMessage = (overlap > MYEPS) ? fullMessage:emptyMessage;
-			
-			Boolean either = (overlap>MYEPS)?printMessage(fullMessage):printMessage("") ; 
+
+			Boolean either = (overlap > MYEPS) ? printMessage(fullMessage) : printMessage("");
 
 		}
 		return true;
@@ -45,8 +45,8 @@ public class CalculateOverlap {
 		this.fundName = fullCommand.split(" ")[1];
 
 		overlapFundCollection = stocks.getFundStocks(fundName);
-		Boolean either = (overlapFundCollection != null)?calculateOverlap():printMessage("FUND_NOT_FOUND\n");
-				
+		Boolean either = (overlapFundCollection != null) ? calculateOverlap() : printMessage("FUND_NOT_FOUND\n");
+
 	}
 
 }

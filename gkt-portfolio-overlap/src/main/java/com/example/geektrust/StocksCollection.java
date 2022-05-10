@@ -23,11 +23,9 @@ public class StocksCollection {
 		return completePortFolio.get(fundName);
 	}
 
-
 	public void addStockFund(String fundName, String stockName) {
 		Set<String> fundStocks = new HashSet<>(completePortFolio.get(fundName));
 		fundStocks.add(stockName);
-		int fundSize = fundStocks.size();
 		completePortFolio.put(fundName, fundStocks);
 	}
 

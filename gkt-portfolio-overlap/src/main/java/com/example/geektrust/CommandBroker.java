@@ -6,19 +6,18 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
-
-
 public class CommandBroker {
 	private final String inputFileName;
-	private StocksCollection stocks=null;
-	//private List<String> currentPortFolio;
+	private StocksCollection stocks = null;
+	// private List<String> currentPortFolio;
 	CurrentPortFolio currentPortFolio;
 
-	private final Map<String, Consumer<String>> commandDispatch = Map.of(
-			"CURRENT_PORTFOLIO",(fullCommand) ->{ this.currentPortFolio= new CurrentPortFolio(fullCommand); }, 
-			"CALCULATE_OVERLAP",(fullCommand) -> new CalculateOverlap(stocks, currentPortFolio,fullCommand),
-			"ADD_STOCK", (fullCommand) -> new AddStock(stocks, fullCommand));
-	CommandBroker(String fileName, StocksCollection stocks ) {
+	private final Map<String, Consumer<String>> commandDispatch = Map.of("CURRENT_PORTFOLIO", (fullCommand) -> {
+		this.currentPortFolio = new CurrentPortFolio(fullCommand);
+	}, "CALCULATE_OVERLAP", (fullCommand) -> new CalculateOverlap(stocks, currentPortFolio, fullCommand), "ADD_STOCK",
+			(fullCommand) -> new AddStock(stocks, fullCommand));
+
+	CommandBroker(String fileName, StocksCollection stocks) {
 		this.inputFileName = fileName;
 		this.stocks = stocks;
 	}
